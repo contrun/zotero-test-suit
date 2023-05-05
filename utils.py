@@ -23,9 +23,7 @@ warnings.filterwarnings(
 
 import pathlib
 
-for d in pathlib.Path(__file__).resolve().parents:
-    ROOT = d
-
+ROOT = pathlib.Path(__file__).resolve().parent
 
 def print(txt, end="\n"):
     sys.stdout.write(str(txt) + end)

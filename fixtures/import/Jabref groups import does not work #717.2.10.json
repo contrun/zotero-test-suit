@@ -1,0 +1,110 @@
+{
+  "collections": {
+    "coll:00000": {
+      "collections": [
+        "coll:00001"
+      ],
+      "items": [
+        1,
+        2,
+        3
+      ],
+      "key": "coll:00000",
+      "name": "Jabref groups import does not work #717.2.10"
+    },
+    "coll:00001": {
+      "collections": [
+        "coll:00002",
+        "coll:00003"
+      ],
+      "items": [],
+      "key": "coll:00001",
+      "name": "my-main-group-2",
+      "parent": "coll:00000"
+    },
+    "coll:00002": {
+      "collections": [],
+      "items": [
+        1
+      ],
+      "key": "coll:00002",
+      "name": "my-subgroup-2",
+      "parent": "coll:00001"
+    },
+    "coll:00003": {
+      "collections": [],
+      "items": [
+        2
+      ],
+      "key": "coll:00003",
+      "name": "my-other-subgroup-2",
+      "parent": "coll:00001"
+    }
+  },
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Doe-2017",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Doe"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: Doe-2017",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "title": "The paper in my-subgroup-2"
+    },
+    {
+      "citationKey": "Other-",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Other"
+        }
+      ],
+      "extra": [
+        "Citation Key: Other-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "title": "The article in my-other-subgroup-2"
+    },
+    {
+      "citationKey": "Unkonw-",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I",
+          "lastName": "Unkonw"
+        }
+      ],
+      "extra": [
+        "Citation Key: Unkonw-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "title": "JR2: paper not in a group"
+    }
+  ]
+}

@@ -1,0 +1,3996 @@
+{
+  "type": "object",
+  "discriminator": {
+    "propertyName": "itemType"
+  },
+  "required": [
+    "itemType"
+  ],
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "annotation"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "artwork"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "artworkMedium": {
+          "type": "string"
+        },
+        "artworkSize": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "attachment"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "audioRecording"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "audioRecordingFormat": {
+          "type": "string"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "label": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "runningTime": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "bill"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "billNumber": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "codePages": {
+          "type": "string"
+        },
+        "codeVolume": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "history": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "legislativeBody": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "session": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "blogPost"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "blogTitle": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "websiteType": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "book"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "edition": {
+          "$ref": "#/$defs/edition"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numPages": {
+          "type": "string"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "seriesNumber": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "bookSection"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "bookTitle": {
+          "type": "string"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "edition": {
+          "$ref": "#/$defs/edition"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "seriesNumber": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "case"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "caseName": {
+          "type": "string"
+        },
+        "court": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateDecided": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "docketNumber": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "firstPage": {
+          "type": "string"
+        },
+        "history": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "reporter": {
+          "type": "string"
+        },
+        "reporterVolume": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "classic"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "computerProgram"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "place": {
+          "type": "string"
+        },
+        "programmingLanguage": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "system": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "versionNumber": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "conferencePaper"
+        },
+        "DOI": {
+          "type": "string"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "conferenceName": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "proceedingsTitle": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "dataset"
+        },
+        "DOI": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "citationKey": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "repositoryLocation": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "versionNumber": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "dictionaryEntry"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "dictionaryTitle": {
+          "type": "string"
+        },
+        "edition": {
+          "$ref": "#/$defs/edition"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "seriesNumber": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "document"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "email"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "encyclopediaArticle"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "edition": {
+          "$ref": "#/$defs/edition"
+        },
+        "encyclopediaTitle": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "seriesNumber": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "film"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "distributor": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "runningTime": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "videoRecordingFormat": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "forumPost"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "forumTitle": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "postType": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "gazette"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "hearing"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "committee": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "documentNumber": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "history": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "legislativeBody": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "session": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "instantMessage"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "interview"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "interviewMedium": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "journalArticle"
+        },
+        "DOI": {
+          "type": "string"
+        },
+        "ISSN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "issue": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "journalAbbreviation": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "seriesText": {
+          "type": "string"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "legalCommentary"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "letter"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "letterType": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "magazineArticle"
+        },
+        "ISSN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "issue": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "manuscript"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "manuscriptType": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numPages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "map"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "edition": {
+          "$ref": "#/$defs/edition"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "mapType": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "newspaperArticle"
+        },
+        "ISSN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "edition": {
+          "$ref": "#/$defs/edition"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "note"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "note": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "patent"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "applicationNumber": {
+          "type": "string"
+        },
+        "assignee": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "filingDate": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "issueDate": {
+          "type": "string"
+        },
+        "issuingAuthority": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "legalStatus": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "patentNumber": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "priorityNumbers": {
+          "type": "string"
+        },
+        "references": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "podcast"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "audioFileType": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "episodeNumber": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "runningTime": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "preprint"
+        },
+        "DOI": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveID": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "citationKey": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "series": {
+          "type": "string"
+        },
+        "seriesNumber": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "presentation"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "meetingName": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "place": {
+          "type": "string"
+        },
+        "presentationType": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "radioBroadcast"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "audioRecordingFormat": {
+          "type": "string"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "episodeNumber": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "network": {
+          "type": "string"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "programTitle": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "runningTime": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "regulation"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "report"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "institution": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "reportNumber": {
+          "type": "string"
+        },
+        "reportType": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "standard"
+        },
+        "DOI": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "citationKey": {
+          "type": "string"
+        },
+        "committee": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numPages": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "versionNumber": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "statute"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "code": {
+          "type": "string"
+        },
+        "codeNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateEnacted": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "history": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "nameOfAct": {
+          "type": "string"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "publicLawNumber": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "session": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "thesis"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numPages": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "thesisType": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "university": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "treaty"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "tvBroadcast"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "episodeNumber": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "network": {
+          "type": "string"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "number": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "programTitle": {
+          "type": "string"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "runningTime": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "videoRecordingFormat": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "videoRecording"
+        },
+        "ISBN": {
+          "type": "string"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "archive": {
+          "type": "string"
+        },
+        "archiveLocation": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "callNumber": {
+          "type": "string"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "libraryCatalog": {
+          "type": "string"
+        },
+        "medium": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "numberOfVolumes": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "runningTime": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "seriesTitle": {
+          "type": "string"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "studio": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "videoRecordingFormat": {
+          "type": "string"
+        },
+        "volume": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemType": {
+          "const": "webpage"
+        },
+        "abstractNote": {
+          "type": "string"
+        },
+        "accessDate": {
+          "type": "string"
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachments"
+        },
+        "creators": {
+          "$ref": "#/$defs/creators"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "number"
+        },
+        "language": {
+          "type": "string"
+        },
+        "multi": {
+          "$ref": "#/$defs/multi"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "publicationTitle": {
+          "type": "string"
+        },
+        "rights": {
+          "type": "string"
+        },
+        "seeAlso": {
+          "$ref": "#/$defs/seeAlso"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "websiteTitle": {
+          "type": "string"
+        },
+        "websiteType": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "accessDate": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "itemType": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "linkMode": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "creators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "creatorType": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "fieldMode": {
+            "type": "number"
+          },
+          "multi": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "tag": {
+                "type": "string"
+              },
+              "type": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "edition": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "multi": {
+      "type": "object"
+    },
+    "seeAlso": {
+      "type": "array"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExport": "idle",
+      "biblatexExtendedDateFormat": false,
+      "citekeyFormat": "[zotero]",
+      "itemObserverDelay": 100,
+      "biblatexExtendedNameFormat": false
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-7643-7986-5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vincenzo de",
+          "lastName": "Risi"
+        }
+      ],
+      "date": "2007",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "en",
+      "numPages": "676",
+      "place": "<pre>Basel and Boston and Berlin</pre>",
+      "publisher": "Birkh\u00e4user",
+      "shortTitle": "Geometry and Monadology",
+      "title": "Geometry and Monadology: Leibniz's Analysis Situs and Philosophy of Space"
+    }
+  ]
+}

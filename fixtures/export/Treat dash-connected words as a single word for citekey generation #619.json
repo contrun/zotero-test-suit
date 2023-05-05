@@ -1,0 +1,63 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "biblatexExtendedDateFormat": false,
+      "bibtexURL": "url",
+      "citeCommand": "autocite",
+      "citekeyFormat": "[authors2:postfix,_][year:postfix,_][Title:skipwords:nopunct:select,1:condense,_]",
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "postscript": "if (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}",
+      "skipFields": "file,timestamp,annotation,note",
+      "skipWords": ""
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2017-08-17 19:37:30",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hannes",
+          "lastName": "Schulz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jeremie",
+          "lastName": "Zumer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Layla El",
+          "lastName": "Asri"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shikhar",
+          "lastName": "Sharma"
+        }
+      ],
+      "date": "2017",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Google Scholar",
+      "publicationTitle": "arXiv preprint arXiv:1706.01690",
+      "tags": [
+        {
+          "tag": "_tablet_modified",
+          "type": 0
+        }
+      ],
+      "title": "A Frame Tracking Model for Memory-Enhanced Dialogue Systems",
+      "url": "https://arxiv.org/abs/1706.01690"
+    }
+  ]
+}

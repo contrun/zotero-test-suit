@@ -1,0 +1,69 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "biblatexExtendedDateFormat": false,
+      "citekeyFormat": "[auth:lower][year]",
+      "itemObserverDelay": 100,
+      "skipFields": "doi"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, is computationally efficient, has little memory requirements, is invariant to diagonal rescaling of the gradients, and is well suited for problems that are large in terms of data and/or parameters. The method is also appropriate for non-stationary objectives and problems with very noisy and/or sparse gradients. The hyper-parameters have intuitive interpretations and typically require little tuning. Some connections to related algorithms, on which Adam was inspired, are discussed. We also analyze the theoretical convergence properties of the algorithm and provide a regret bound on the convergence rate that is comparable to the best known results under the online convex optimization framework. Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm.",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Diederik P.",
+          "lastName": "Kingma"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jimmy",
+          "lastName": "Ba"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "tex.eventdate= 2015-05-07/2015-05-09",
+        "tex.venue= San Diego, CA, USA"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "notes": [
+        "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>"
+      ],
+      "publicationTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
+      "tags": [
+        {
+          "tag": "Computer Science - Learning",
+          "type": 1
+        }
+      ],
+      "title": "Adam: A Method for Stochastic Optimization"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "presenter",
+          "firstName": "Stacy",
+          "lastName": "D\u2019Erasmo"
+        }
+      ],
+      "date": "2000-04-26",
+      "itemID": 2,
+      "itemType": "presentation",
+      "language": "en-US",
+      "place": "Northwestern University, Evanston, IL",
+      "rights": "CMS16e",
+      "title": "The craft and career of writing",
+      "type": "lecture"
+    }
+  ]
+}

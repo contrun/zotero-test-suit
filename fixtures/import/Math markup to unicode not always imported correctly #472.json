@@ -1,0 +1,95 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "importJabRefAbbreviations": false,
+      "importJabRefStrings": false
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "citationKey": "test_citation1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Doe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2016-02",
+      "extra": [
+        "Citation Key: test_citation1",
+        "ISSN: 0193-6530"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "300\u2013301",
+      "publicationTitle": "IEEE_J_PROC",
+      "tags": [
+        {
+          "tag": "Keyword 1"
+        },
+        {
+          "tag": "Keyword 2"
+        }
+      ],
+      "title": "Test Title With 100 \ud835\udf07J, 200\u2009\ud835\udf07J Energy, and \u00b10.1% Accuracy, 0.2\u2009mm\u00b2 Size, and -50\u2009dB Attenuation"
+    },
+    {
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "citationKey": "test_citation2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Doe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2016-02",
+      "extra": [
+        "Citation Key: test_citation2",
+        "ISSN: 0193-6530"
+      ],
+      "itemID": 2,
+      "itemType": "conferencePaper",
+      "pages": "300\u2013301",
+      "publicationTitle": "IEEE_J_PROC",
+      "tags": [
+        {
+          "tag": "Keyword 1"
+        },
+        {
+          "tag": "Keyword 2"
+        }
+      ],
+      "title": "Test Title with space\u2003quad, space\u2004semi-colon, space\u205fcolon, space\u2009comma, space nbsp"
+    },
+    {
+      "itemID": 3,
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
+      "tags": [
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 1
+        }
+      ]
+    }
+  ]
+}

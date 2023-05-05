@@ -1,0 +1,44 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {},
+    "preferences": {
+      "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
+      "citekeyFormat": "[zotero]",
+      "quickCopyMode": "citekeys"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1007/s10695-006-9104-7",
+      "ISSN": "0920-1742, 1573-5168",
+      "accessDate": "2016-08-18 20:53:27",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R. W.",
+          "lastName": "Brill"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P. G.",
+          "lastName": "Bushnell"
+        }
+      ],
+      "date": "2006/09/23",
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Fish Physiol Biochem",
+      "language": "en",
+      "libraryCatalog": "link.springer.com",
+      "pages": "283\u2013294",
+      "publicationTitle": "Fish Physiology and Biochemistry",
+      "title": "Effects of open- and closed-system temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<span class=\"nocase\"><i>Thunnus thynnus</i></span>)",
+      "url": "http://link.springer.com/article/10.1007/s10695-006-9104-7",
+      "volume": "32"
+    }
+  ]
+}

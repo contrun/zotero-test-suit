@@ -1,0 +1,18 @@
+@online{CalilPHR:2022,
+  title = {High-resolution, basin-scale simulations reveal the impact of intermediate zonal jets on the {{Atlantic}} oxygen minimum zones},
+  author = {Calil, Paulo H. R.},
+  date = {2022-10-18},
+  eprinttype = {Earth and Space Science Open Archive},
+  eprintclass = {Oceanography},
+  issn = {1051-1180},
+  doi = {10.1002/essoar.10511180.2},
+  url = {https://essopenarchive.org/doi/full/10.1002/essoar.10511180.2},
+  urldate = {2022-10-26},
+  abstract = {Intermediate, eastward zonal jets connect the oxygen-rich western boundary of the Atlantic Ocean with the oxygen minimum zones on the eastern boundary. These jets are not well represented in climate},
+  langid = {english},
+  pubstate = {preprint}
+}
+% == BibLateX quality report for CalilPHR:2022:
+% Unexpected field 'issn'
+% ? unused Archive location ("world")
+% ? unused Library catalog ("www.essoar.org")

@@ -1,0 +1,45 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "citekeyFormat": "[auth2_1][auth2_2][auth2_3][year]",
+      "itemObserverDelay": 100
+    }
+  },
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "One, Author"
+        },
+        {
+          "creatorType": "author",
+          "name": "Two, Author"
+        },
+        {
+          "creatorType": "author",
+          "name": "Three, Author"
+        },
+        {
+          "creatorType": "author",
+          "name": "Four, Author"
+        }
+      ],
+      "date": "2018",
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "1\u20132",
+      "publicationTitle": "A Fancy Journal",
+      "title": "My Article",
+      "volume": "1"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {},
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "date": "2014",
+      "extra": [
+        "Citation Key: ",
+        "tex.ptolemaeus-14-systemdesigneditor= Claudius Ptolemaeus"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "publisher": "Ptolemy.org",
+      "title": "System design, modeling, and simulation using Ptolemy II",
+      "url": "http://ptolemy.org/books/Systems"
+    }
+  ]
+}

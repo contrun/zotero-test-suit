@@ -1,0 +1,108 @@
+{
+  "inputs": {
+    "gen/preferences/meta.ts": {
+      "bytes": 25245,
+      "imports": [],
+      "format": "esm"
+    },
+    "content/client.ts": {
+      "bytes": 588,
+      "imports": [
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "translators/lib/translator.ts": {
+      "bytes": 17578,
+      "imports": [
+        {
+          "path": "gen/preferences/meta.ts",
+          "kind": "import-statement",
+          "original": "../../gen/preferences/meta"
+        },
+        {
+          "path": "../../content/prefs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "content/client.ts",
+          "kind": "import-statement",
+          "original": "../../content/client"
+        },
+        {
+          "path": "../../gen/typings/serialized-item",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "content/escape.ts": {
+      "bytes": 498,
+      "imports": [
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "translators/Better BibTeX.ts": {
+      "bytes": 4475,
+      "imports": [
+        {
+          "path": "translators/lib/translator.ts",
+          "kind": "import-statement",
+          "original": "./lib/translator"
+        },
+        {
+          "path": "content/escape.ts",
+          "kind": "import-statement",
+          "original": "../content/escape"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "build/resource/Better BibTeX.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "translators/Better BibTeX.ts",
+      "inputs": {
+        "translators/Better BibTeX.ts": {
+          "bytesInOutput": 4372
+        },
+        "gen/preferences/meta.ts": {
+          "bytesInOutput": 21189
+        },
+        "content/client.ts": {
+          "bytesInOutput": 645
+        },
+        "translators/lib/translator.ts": {
+          "bytesInOutput": 12065
+        },
+        "content/escape.ts": {
+          "bytesInOutput": 238
+        }
+      },
+      "bytes": 40423
+    }
+  }
+}

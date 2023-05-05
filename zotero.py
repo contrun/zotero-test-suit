@@ -53,7 +53,7 @@ yaml = YAML(typ="safe")
 yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, "exported")
-FIXTURES = os.path.join(ROOT, "test/fixtures")
+FIXTURES = os.path.join(ROOT, "fixtures")
 
 # with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
 #  bbt_json_schema = json.load(f)
