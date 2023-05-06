@@ -355,10 +355,10 @@ class Zotero:
                     )
                     if ready:
                         break
-                    time.sleep(1)
 
                 except (urllib.error.HTTPError, urllib.error.URLError, socket.timeout):
                     pass
+                time.sleep(1)
 
         assert ready, f"{self.client} did not start"
         self.config.pop()

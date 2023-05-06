@@ -2,10 +2,6 @@ import zotero
 
 
 def main():
-    pass
-
-
-if __name__ == "__main__":
     config = {
         "client": "zotero",
         "worker": "false",
@@ -14,4 +10,9 @@ if __name__ == "__main__":
         "kill": "true",
         "slow": "true",
     }
-    zotero = zotero.Zotero(config)
+    _zotero = zotero.Zotero(config)
+    while True:
+        pass
+
+if __name__ == "__main__":
+    main()
