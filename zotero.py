@@ -1,10 +1,8 @@
-import bs4
 import sqlite3
 import uuid
 import json, jsonpatch
-import os, sys
+import os
 
-# import redo
 import platform
 import configparser
 import glob
@@ -20,7 +18,6 @@ from utils import (
     ROOT,
     assert_equal_diff,
     serialize,
-    html2md,
     clean_html,
     extra_lower,
 )
