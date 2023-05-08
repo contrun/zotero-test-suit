@@ -40,6 +40,7 @@ with import <nixpkgs> { };
     selenium
     snakemake
     toml
+    pyautogui
     pyelftools
     (toPythonModule bcc)
   ])).env
