@@ -1,4 +1,3 @@
-import sqlite3
 import uuid
 import json
 import os
@@ -25,55 +24,11 @@ import subprocess
 import atexit
 import time
 
-
 import threading
 import socket
-from pygit2 import Repository
-from lxml import etree
 
-from ruamel.yaml import YAML
 
-yaml = YAML(typ="safe")
-yaml.default_flow_style = False
-
-EXPORTED = os.path.join(ROOT, "exported")
 FIXTURES = os.path.join(ROOT, "fixtures")
-
-
-def install_proxies(xpis, profile):
-    for xpi in xpis:
-        assert os.path.isdir(xpi)
-        utils.print(f"installing {xpi}")
-        rdf = etree.parse(os.path.join(xpi, "install.rdf"))
-        xpi_id = rdf.xpath(
-            "/rdf:RDF/rdf:Description/em:id",
-            namespaces={
-                "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-                "em": "http://www.mozilla.org/2004/em-rdf#",
-            },
-        )[0].text
-        proxy = os.path.join(profile, "extensions", xpi_id)
-        if not os.path.isdir(os.path.dirname(proxy)):
-            os.mkdir
-            os.makedirs(os.path.dirname(proxy))
-        elif os.path.isdir(proxy) and not os.path.islink(proxy):
-            shutil.rmtree(proxy)
-        elif os.path.exists(proxy):
-            os.remove(proxy)
-        with open(proxy, "w") as f:
-            f.write(xpi)
-
-    with open(os.path.join(profile, "prefs.js"), "r+") as f:
-        utils.print("stripping prefs.js")
-        lines = f.readlines()
-        f.seek(0)
-        for line in lines:
-            if "extensions.lastAppBuildId" in line:
-                continue
-            if "extensions.lastAppVersion" in line:
-                continue
-            f.write(line)
-        f.truncate()
 
 
 def install_xpis(path, profile):
@@ -96,7 +51,7 @@ class Pinger:
             self.every, self.display, [time.time(), self.every, self.stop]
         ).start()
 
-    def __exit__(self, *_args):
+    def __exit__(self, *args):
         self.stop.set()
 
     def display(self, start, every, stop):
@@ -119,12 +74,6 @@ class Config:
                 "trace_factor": 1,
             }
         ]
-        trace = os.path.join(ROOT, ".trace.json")
-        if os.path.exists(trace):
-            with open(trace) as f:
-                trace = json.load(f)
-                if Repository(".").head.shorthand in trace:
-                    self.data[0]["trace_factor"] = 10
         self.reset()
 
     def __getattr__(self, name):
@@ -175,17 +124,10 @@ class Zotero:
         self.beta = userdata.get("beta") == "true"
         self.dev = userdata.get("dev") == "true"
         self.password = str(uuid.uuid4())
-        self.import_at_start = userdata.get("import", None)
-        if self.import_at_start:
-            self.import_at_start = os.path.abspath(self.import_at_start)
 
         self.config = Config(userdata)
 
         self.proc = None
-
-        if os.path.exists(EXPORTED):
-            shutil.rmtree(EXPORTED)
-        os.makedirs(EXPORTED)
 
         if self.client == "zotero":
             self.port = 23119
@@ -284,9 +226,6 @@ class Zotero:
     def start(self):
         self.needs_restart = False
         profile = self.create_profile()
-        shutil.rmtree(
-            os.path.join(profile.path, self.client, "better-bibtex"), ignore_errors=True
-        )
 
         if self.client == "zotero":
             datadir_profile = "-datadir profile"
@@ -310,25 +249,9 @@ class Zotero:
                 try:
                     ready = self.execute(
                         """
-            if (!Zotero.BetterBibTeX) {
-              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
-              return false;
-            }
-            if (!Zotero.BetterBibTeX.ready) {
-              if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
-                Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
-              } else {
-                Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
-              }
-              return false;
-            }
-
-            Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
-            await Zotero.BetterBibTeX.ready;
-            if (testing && !Zotero.Prefs.get('translators.better-bibtex.testing')) throw new Error('translators.better-bibtex.testing not set!')
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
-            return true;
-          """,
+                        Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
+                        return true;
+                        """,
                         testing=self.testing,
                     )
                     if ready:
@@ -340,22 +263,6 @@ class Zotero:
 
         assert ready, f"{self.client} did not start"
         self.config.pop()
-
-        if self.import_at_start:
-            prefs = {}
-            if self.import_at_start.endswith(".json"):
-                with open(self.import_at_start) as f:
-                    data = json.load(f)
-                    prefs = data.get("config", {}).get("preferences", {})
-            utils.print(
-                f"import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}"
-            )
-            self.execute(
-                "return await Zotero.BetterBibTeX.TestSupport.importFile(file, true, prefs)",
-                file=self.import_at_start,
-                prefs=prefs,
-            )
-            self.import_at_start = None
 
     def create_profile(self):
         profile = Munch(name="BBTZ5TEST")
@@ -422,9 +329,6 @@ class Zotero:
                 "extensions.zotero.dataDir", os.path.join(profile.path, self.client)
             )
             profile.firefox.set_preference("extensions.zotero.useDataDir", True)
-            profile.firefox.set_preference(
-                "extensions.zotero.translators.better-bibtex.removeStock", False
-            )
         else:
             profile.firefox = webdriver.FirefoxProfile(
                 os.path.join(FIXTURES, "profile", self.client)
@@ -433,10 +337,6 @@ class Zotero:
         install_xpis(os.path.join(ROOT, "xpi"), profile.firefox)
 
         install_xpis(os.path.join(ROOT, "other-xpis"), profile.firefox)
-        if self.config.db:
-            install_xpis(
-                os.path.join(ROOT, "test/db", self.config.db, "xpis"), profile.firefox
-            )
         if self.config.profile:
             install_xpis(
                 os.path.join(ROOT, "test/db", self.config.profile, "xpis"),
@@ -444,18 +344,6 @@ class Zotero:
             )
 
         profile.firefox.set_preference("extensions.zotero.debug.memoryInfo", True)
-        profile.firefox.set_preference(
-            "extensions.zotero.translators.better-bibtex.testing", self.testing
-        )
-        profile.firefox.set_preference(
-            "extensions.zotero.translators.better-bibtex.logEvents", self.testing
-        )
-        profile.firefox.set_preference(
-            "extensions.zotero.translators.better-bibtex.caching", self.caching
-        )
-        profile.firefox.set_preference(
-            "extensions.zotero.translators.better-bibtex.scrubDatabase", True
-        )
         # don't nag about the Z7 beta for a day
         profile.firefox.set_preference(
             "extensions.zotero.hiddenNotices",
@@ -481,12 +369,6 @@ class Zotero:
                 for p, v in nested_dict_iter(preferences["fr"]):
                     profile.firefox.firefox.set_preference(p, v)
 
-        if not self.config.first_run:
-            profile.firefox.set_preference(
-                "extensions.zotero.translators.better-bibtex.citekeyFormat",
-                "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
-            )
-
         if self.client == "jurism":
             utils.print(
                 "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
@@ -495,69 +377,12 @@ class Zotero:
                 "extensions.zotero.dataDir", os.path.join(profile.path, "jurism")
             )
             profile.firefox.set_preference("extensions.zotero.useDataDir", True)
-            profile.firefox.set_preference(
-                "extensions.zotero.translators.better-bibtex.removeStock", False
-            )
 
         profile.firefox.update_preferences()
 
         shutil.rmtree(profile.path, ignore_errors=True)
         shutil.move(profile.firefox.path, profile.path)
         profile.firefox = None
-
-        if self.config.db:
-            self.needs_restart = True
-            utils.print(f"restarting using {self.config.db}")
-            dbs = os.path.join(ROOT, "test", "db", self.config.db)
-            if not os.path.exists(dbs):
-                os.makedirs(dbs)
-
-            db_zotero = os.path.join(dbs, f"{self.client}.sqlite")
-            db_zotero_alt = os.path.join(dbs, self.client, f"{self.client}.sqlite")
-            if not os.path.exists(db_zotero) and not os.path.exists(db_zotero_alt):
-                urllib.request.urlretrieve(
-                    f"https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite",
-                    db_zotero,
-                )
-            if not os.path.exists(db_zotero):
-                db_zotero = db_zotero_alt
-            shutil.copy(
-                db_zotero,
-                os.path.join(profile.path, self.client, os.path.basename(db_zotero)),
-            )
-
-            db_bbt = os.path.join(dbs, "better-bibtex.sqlite")
-            db_bbt_alt = os.path.join(dbs, self.client, "better-bibtex.sqlite")
-            if not os.path.exists(db_bbt) and not os.path.exists(db_bbt_alt):
-                urllib.request.urlretrieve(
-                    f"https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite",
-                    db_bbt,
-                )
-            if not os.path.exists(db_bbt):
-                db_bbt = db_bbt_alt
-            shutil.copy(
-                db_bbt,
-                os.path.join(profile.path, self.client, os.path.basename(db_bbt)),
-            )
-
-            # remove any auto-exports that may exist
-            db = sqlite3.connect(
-                os.path.join(profile.path, self.client, os.path.basename(db_bbt))
-            )
-            ae = None
-            for (ae,) in db.execute(
-                'SELECT data FROM "better-bibtex" WHERE name = ?',
-                ["better-bibtex.autoexport"],
-            ):
-                ae = json.loads(ae)
-                ae["data"] = []
-            if ae:
-                db.execute(
-                    'UPDATE "better-bibtex" SET data = ? WHERE name = ?',
-                    [json.dumps(ae), "better-bibtex.autoexport"],
-                )
-                db.commit()
-            db.close()
 
         return profile
 
@@ -578,32 +403,8 @@ class Preferences:
     def __init__(self, zotero):
         self.zotero = zotero
         self.pref = {}
-        self.prefix = "translators.better-bibtex."
-
-        with open(os.path.join(ROOT, "schema/BetterBibTeX JSON.json")) as f:
-            schema = json.load(f, object_hook=Munch)
-            self.supported = {
-                self.prefix
-                + pref: {"string": str, "boolean": bool, "number": int}[tpe.type]
-                for pref, tpe in schema.properties.config.properties.preferences.properties.items()
-            }
-        self.supported[self.prefix + "removeStock"] = bool
-        self.supported[self.prefix + "ignorePostscriptErrors"] = bool
 
     def __setitem__(self, key, value):
-        if key[0] == ".":
-            key = self.prefix + key[1:]
-
-        if key.startswith(self.prefix):
-            assert key in self.supported, f'Unknown preference "{key}"'
-            assert (
-                type(value) == self.supported[key]
-            ), f"Unexpected value of type {type(value)} for preference {key}"
-
-        if key == "translators.better-bibtex.postscript":
-            with open(os.path.join(FIXTURES, value)) as f:
-                value = f.read()
-
         self.pref[key] = value
         self.zotero.execute("Zotero.Prefs.set(pref, value)", pref=key, value=value)
 
