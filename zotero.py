@@ -9,13 +9,6 @@ from selenium import webdriver
 import toml
 import urllib
 from munch import Munch
-from utils import (
-    running,
-    nested_dict_iter,
-    benchmark,
-    ROOT,
-)
-import utils
 import shutil
 import shlex
 import time
@@ -23,10 +16,33 @@ import psutil
 import subprocess
 import atexit
 import time
+import re
+from bs4 import BeautifulSoup
+from markdownify import markdownify as md
+import difflib
+import json
+import os
+import platform
+import psutil
+import subprocess
+import sys
+import time
+import psutil
+import copy
+
+import warnings
+
 
 import threading
 import socket
 
+import pathlib
+
+warnings.filterwarnings(
+    "ignore", category=UserWarning, module="bs4", message=".*looks like a URL.*"
+)
+
+ROOT = pathlib.Path(__file__).resolve().parent
 
 FIXTURES = os.path.join(ROOT, "fixtures")
 
@@ -34,10 +50,10 @@ FIXTURES = os.path.join(ROOT, "fixtures")
 def install_xpis(path, profile):
     if not os.path.exists(path):
         return
-    utils.print(f"Installing xpis in {path}")
+    my_print(f"Installing xpis in {path}")
 
     for xpi in glob.glob(os.path.join(path, "*.xpi")):
-        utils.print(f"installing {xpi}")
+        my_print(f"installing {xpi}")
         profile.add_extension(xpi)
 
 
@@ -58,7 +74,7 @@ class Pinger:
         if stop.is_set():
             return
 
-        utils.print(".", end="")
+        my_print(".", end="")
         threading.Timer(every, self.display, [start, every, stop]).start()
 
 
@@ -189,7 +205,7 @@ class Zotero:
             pass
 
         def on_terminate(proc):
-            utils.print(
+            my_print(
                 "process {} terminated with exit code {}".format(proc, proc.returncode)
             )
 
@@ -206,7 +222,7 @@ class Zotero:
 
         if alive:
             for p in alive:
-                utils.print("process {} survived SIGTERM; trying SIGKILL" % p)
+                my_print("process {} survived SIGTERM; trying SIGKILL" % p)
                 try:
                     p.kill()
                 except psutil.NoSuchProcess:
@@ -214,7 +230,7 @@ class Zotero:
             gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
             if alive:
                 for p in alive:
-                    utils.print("process {} survived SIGKILL; giving up" % p)
+                    my_print("process {} survived SIGKILL; giving up" % p)
         self.proc = None
         assert not running("Zotero")
 
@@ -230,21 +246,21 @@ class Zotero:
         if self.client == "zotero":
             datadir_profile = "-datadir profile"
         else:
-            utils.print(
+            my_print(
                 "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
             )
             datadir_profile = ""
         cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
-        utils.print(f"Starting {self.client}: {cmd}")
+        my_print(f"Starting {self.client}: {cmd}")
         self.proc = subprocess.Popen(cmd, shell=True)
-        utils.print(f"{self.client} started: {self.proc.pid}")
+        my_print(f"{self.client} started: {self.proc.pid}")
 
         ready = False
         self.config.stash()
         self.config.timeout = 2
-        with benchmark(f"starting {self.client}") as bm:
+        with Benchmark(f"starting {self.client}") as bm:
             for _ in range(120):
-                utils.print("connecting... (%.2fs)" % (bm.elapsed,))
+                my_print("connecting... (%.2fs)" % (bm.elapsed,))
 
                 try:
                     ready = self.execute(
@@ -358,7 +374,7 @@ class Zotero:
         profile.firefox.set_preference(
             "dom.max_chrome_script_run_time", self.config.timeout
         )
-        utils.print(f"dom.max_chrome_script_run_time={self.config.timeout}")
+        my_print(f"dom.max_chrome_script_run_time={self.config.timeout}")
 
         with open(os.path.join(os.path.dirname(__file__), "preferences.toml")) as f:
             preferences = toml.load(f)
@@ -370,7 +386,7 @@ class Zotero:
                     profile.firefox.firefox.set_preference(p, v)
 
         if self.client == "jurism":
-            utils.print(
+            my_print(
                 "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
             )
             profile.firefox.set_preference(
@@ -429,3 +445,135 @@ class Preferences:
                 return value[1:-1]
 
         return value
+
+def my_print(txt, end="\n"):
+    sys.stdout.write(str(txt) + end)
+    sys.stdout.flush()
+
+
+class HashableDict(dict):
+    def __hash__(self):
+        # lower case before hash?
+        return str(hash(json.dumps(self, sort_keys=True)))
+
+
+class Benchmark(object):
+    def __init__(self, name):
+        self.name = name
+
+    def __enter__(self):
+        self.started = time.time()
+        return self
+
+    def __exit__(self, ty, val, tb):
+        print("{} {:.2f}s".format(self.name, self.elapsed))
+        return False
+
+    @property
+    def elapsed(self):
+        return time.time() - self.started
+
+
+def assert_equal_diff(expected, found):
+    assert found in [
+        re.sub(r"\s+$", "\n", expected.lstrip()),
+        expected.strip(),
+    ], "\n" + "\n".join(
+        difflib.unified_diff(
+            expected.split("\n"),
+            found.split("\n"),
+            fromfile="expected",
+            tofile="found",
+            lineterm="",
+        )
+    )
+
+
+def expand_scenario_variables(context, filename, star=True):
+    scenario = None
+    if (
+        hasattr(context, "scenario") and context.scenario.keyword == "Scenario"
+    ):  # exclude outlines
+        scenario = context.scenario.name
+    elif hasattr(context, "imported") and context.imported:
+        scenario = os.path.splitext(os.path.basename(context.imported))[0]
+    if scenario:
+        filename = filename.replace("((scenario))", scenario)
+        if star:
+            filename = filename.replace("*", scenario)
+    return filename
+
+
+def html2md(html):
+    if "<" in html:
+        html = md(BeautifulSoup(html, "lxml").prettify())
+    return html.strip()
+
+
+def serialize(obj):
+    return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
+
+
+def extra_lower(obj):
+    if isinstance(obj, dict) and "items" in obj:
+        obj = copy.deepcopy(obj)
+        for item in obj["items"]:
+            if "extra" in item:
+                if type(item["extra"]) == list:
+                    item["extra"] = [line.lower() for line in item["extra"]]
+                else:
+                    item["extra"] = item["extra"].lower()
+    return obj
+
+
+def running(id):
+    if type(id) == int:
+        try:
+            os.kill(id, 0)
+            return False
+        except OSError:
+            return True
+
+    if platform.system() == "Darwin":
+        try:
+            count = int(
+                subprocess.check_output(
+                    [
+                        "osascript",
+                        "-e",
+                        'tell application "System Events"',
+                        "-e",
+                        f'count (every process whose name is "{id}")',
+                        "-e",
+                        "end tell",
+                    ]
+                ).strip()
+            )
+        except subprocess.CalledProcessError as err:
+            print(err.output)
+            if err.output.decode("utf-8") == "Application isn’t running.":
+                return False
+            raise
+
+    else:
+        count = 0
+        for proc in psutil.process_iter():
+            try:
+                # Check if process name contains the given name string.
+                if id.lower() in proc.name().lower():
+                    count += 1
+                    print(f"{id} is running, name = {proc.name()}, pid = {proc.pid}")
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+
+    return count > 0
+
+
+def nested_dict_iter(nested, root=[]):
+    for key, value in nested.items():
+        if isinstance(value, dict):
+            for inner_key, inner_value in nested_dict_iter(value, root + [key]):
+                yield inner_key, inner_value
+        else:
+            yield ".".join(root) + "." + key, value
+            yield ".".join(root) + "." + key, value
