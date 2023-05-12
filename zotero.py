@@ -10,7 +10,7 @@ from selenium import webdriver
 import toml
 import urllib
 import tempfile
-from munch import *
+from munch import Munch
 from utils import (
     running,
     nested_dict_iter,
@@ -31,15 +31,12 @@ import psutil
 import subprocess
 import atexit
 import time
-import jsonschema
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
 
-import sys
 import threading
 import socket
-from pathlib import PurePath
 from diff_match_patch import diff_match_patch
 from pygit2 import Repository
 from lxml import etree
@@ -51,11 +48,6 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, "exported")
 FIXTURES = os.path.join(ROOT, "fixtures")
-
-# with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
-#  bbt_json_schema = json.load(f)
-# def validate_bbt_json(lib):
-#  jsonschema.validate(instance=lib, schema=bbt_json_schema)
 
 
 def install_proxies(xpis, profile):
@@ -114,7 +106,7 @@ class Pinger:
             self.every, self.display, [time.time(), self.every, self.stop]
         ).start()
 
-    def __exit__(self, *args):
+    def __exit__(self, *_args):
         self.stop.set()
 
     def display(self, start, every, stop):
@@ -164,7 +156,7 @@ class Config:
     def update(self, **kwargs):
         for k, v in kwargs.items():
             if not k in self.data[-1]:
-                raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+                raise AttributeError(f"'{type(self)}' object has no attribute '{k}'")
             if type(v) != type(self.data[-1][k]):
                 raise ValueError(f"{type(self)}.{k} must be of type {self.data[-1][k]}")
             self.data[0][k] = v
@@ -322,7 +314,6 @@ class Zotero:
         self.config.stash()
         self.config.timeout = 2
         with benchmark(f"starting {self.client}") as bm:
-            posted = False
             for _ in range(120):
                 utils.print("connecting... (%.2fs)" % (bm.elapsed,))
 
