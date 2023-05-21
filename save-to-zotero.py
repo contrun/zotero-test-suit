@@ -86,7 +86,8 @@ def save_url(z, driver, url):
 
 def main():
     config = zotero.ZoteroConfig(
-        start_new=True,
+        start_new=False,
+        profile_name="zotero-saver",
         extensions=[
             os.path.join(ROOT, "xpi"),
         ],

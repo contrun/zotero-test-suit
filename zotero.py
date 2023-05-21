@@ -57,10 +57,8 @@ def install_xpis(profile, *paths):
         install_xpi(profile, path)
 
 
-def update_profile_ini(name, path):
-    os.makedirs(path, exist_ok=True)
-
-    ini_file = os.path.join(path, "paths.ini")
+def update_profile_ini(ini_file, profile_name, profile_path):
+    os.makedirs(profile_path, exist_ok=True)
 
     ini = configparser.RawConfigParser()
     ini.optionxform = str
@@ -73,7 +71,7 @@ def update_profile_ini(name, path):
     id = None
     for p in ini.sections():
         for k, v in ini.items(p):
-            if k == "Name" and v == name:
+            if k == "Name" and v == profile_name:
                 id = p
 
     if not id:
@@ -84,10 +82,10 @@ def update_profile_ini(name, path):
                 break
             free += 1
         ini.add_section(id)
-        ini.set(id, "Name", name)
+        ini.set(id, "Name", profile_name)
 
     ini.set(id, "IsRelative", 0)
-    ini.set(id, "Path", path)
+    ini.set(id, "Path", profile_path)
     ini.set(id, "Default", None)
     with open(ini_file, "w") as f:
         ini.write(f, space_around_delimiters=False)
@@ -191,8 +189,8 @@ class ZoteroConfig:
     def __init__(self, **config):
         self.data = [
             {
-                "profile_name": "BBTZ5TEST",
-                "profile_path": os.path.expanduser(f"~/.BBTZ5TEST"),
+                "profile_name": "zotero-test-suit",
+                "profile_path": "",
                 "locale": "",
                 "first_run": True,
                 "timeout": 120,
@@ -410,7 +408,8 @@ class Zotero:
             "Darwin": f"/Applications/{self.config.client}{variant}.app/Contents/MacOS/{self.config.client}",
         }[platform.system()]
 
-        update_profile_ini(profile.name, profile.profiles)
+        ini_file = os.path.join(profile.profiles, "profiles.ini")
+        update_profile_ini(ini_file, profile.name, profile.path)
 
         if self.config.start_new:
             my_log(f"Removing existing profile at {profile.path}")
