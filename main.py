@@ -2,14 +2,7 @@ import zotero
 
 
 def main():
-    config = {
-        "client": "zotero",
-        "worker": "false",
-        "logging": "false",
-        "caching": "true",
-        "kill": "true",
-        "slow": "true",
-    }
+    config = zotero.ZoteroConfig()
     z = zotero.Zotero(config)
     items = z.execute(
         """

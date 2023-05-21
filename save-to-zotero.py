@@ -26,7 +26,7 @@ def get_driver():
 
 
 def save_url(driver, url):
-    # TOD: check url already exists before saving it.
+    # TODO: check url already exists before saving it.
     driver.get(url)
     print(f"Trying to saving {url}")
     # Save url to zotero by pressing the zotero connector shortcut.

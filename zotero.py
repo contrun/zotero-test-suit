@@ -146,19 +146,27 @@ class Pinger:
         threading.Timer(every, self.display, [start, every, stop]).start()
 
 
-class Config:
-    def __init__(self, userdata):
+class ZoteroConfig:
+    def __init__(self, **kwargs):
         self.data = [
             {
                 "db": "",
-                "locale": userdata.get("locale", ""),
-                "first_run": userdata.get("first-run", "false") == "true",
+                "locale": "",
+                "first_run": True,
                 "timeout": 120,
                 "profile": "",
                 "trace_factor": 1,
+                "client": "zotero",
+                "beta": False,
+                "dev": False,
+                "password": str(uuid.uuid4()),
+                "testing": False,
+                "kill_at_exit": True,
+                "port": 0
             }
         ]
         self.reset()
+        self.update(**kwargs)
 
     def __getattr__(self, name):
         value = [frame for frame in self.data if name in frame]
@@ -166,8 +174,13 @@ class Config:
             raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
 
         value = value[0][name]
-        if name == "db" and value == "":
-            value = None
+        if name == "port" and value == 0:
+            if self.client == "zotero":
+                return 23119
+            elif self.client == "jurism":
+                return 24119
+            else:
+                raise ValueError(f'Unexpected client "{self.client}"')
         return value
 
     def __setattr__(self, name, value):
@@ -201,48 +214,20 @@ class Config:
 
 
 class Zotero:
-    def __init__(self, userdata):
+    def __init__(self, config=None, **kwargs):
         assert not running("Zotero"), "Zotero is running"
 
-        self.client = userdata.get("client", "zotero")
-        self.beta = userdata.get("beta") == "true"
-        self.dev = userdata.get("dev") == "true"
-        self.password = str(uuid.uuid4())
-
-        self.config = Config(userdata)
-
-        self.proc = None
-
-        if self.client == "zotero":
-            self.port = 23119
-        elif self.client == "jurism":
-            self.port = 24119
+        if config:
+            config.update(**kwargs)
         else:
-            raise ValueError(f'Unexpected client "{self.client}"')
-        self.config = Config(userdata)
+            config = ZoteroConfig(**kwargs)
 
-        self.proc = None
+        self.config = config
 
-        if self.client == "zotero":
-            self.port = 23119
-        elif self.client == "jurism":
-            self.port = 24119
-        else:
-            raise ValueError(f'Unexpected client "{self.client}"')
-
-        self.zotero = self.client == "zotero"
-        self.jurism = self.client == "jurism"
-
-        with open(os.path.join(ROOT, "gen/translators.json")) as f:
-            self.translators = json.load(f, object_hook=Munch)
-
-        if userdata.get("kill", "true") == "true":
+        if self.config.kill_at_exit:
             atexit.register(self.shutdown)
 
-        self.testing = userdata.get("testing", "true") == "true"
-        self.worker = userdata.get("worker", "true") == "true"
-        self.caching = userdata.get("caching", "true") == "true"
-
+        self.proc = None
         self.preferences = Preferences(self)
         self.redir = ">"
         self.start()
@@ -254,7 +239,7 @@ class Zotero:
 
         with Pinger(20):
             req = urllib.request.Request(
-                f"http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}",
+                f"http://127.0.0.1:{self.config.port}/debug-bridge/execute?password={self.config.password}",
                 data=script.encode("utf-8"),
                 headers={"Content-type": "application/javascript"},
             )
@@ -321,7 +306,7 @@ class Zotero:
         self.needs_restart = False
         profile = self.create_profile()
 
-        if self.client == "zotero":
+        if self.config.client == "zotero":
             datadir_profile = "-datadir profile"
         else:
             my_log(
@@ -329,14 +314,14 @@ class Zotero:
             )
             datadir_profile = ""
         cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
-        my_log(f"Starting {self.client}: {cmd}")
+        my_log(f"Starting {self.config.client}: {cmd}")
         self.proc = subprocess.Popen(cmd, shell=True)
-        my_log(f"{self.client} started: {self.proc.pid}")
+        my_log(f"{self.config.client} started: {self.proc.pid}")
 
         ready = False
         self.config.stash()
         self.config.timeout = 2
-        with Benchmark(f"starting {self.client}") as bm:
+        with Benchmark(f"starting {self.config.client}") as bm:
             for _ in range(120):
                 my_log("connecting... (%.2fs)" % (bm.elapsed,))
 
@@ -346,7 +331,7 @@ class Zotero:
                         Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
                         return true;
                         """,
-                        testing=self.testing,
+                        testing=self.config.testing,
                     )
                     if ready:
                         break
@@ -355,7 +340,7 @@ class Zotero:
                     pass
                 time.sleep(1)
 
-        assert ready, f"{self.client} did not start"
+        assert ready, f"{self.config.client} did not start"
         self.config.pop()
 
     def create_profile(self):
@@ -364,21 +349,21 @@ class Zotero:
         profile.path = os.path.expanduser(f"~/.{profile.name}")
 
         profile.profiles = {
-            # 'Linux': os.path.expanduser(f'~/.{self.client}/{self.client}'),
-            "Linux": os.path.expanduser(f"~/.{self.client}/zotero"),
-            # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
+            # 'Linux': os.path.expanduser(f'~/.{self.config.client}/{self.config.client}'),
+            "Linux": os.path.expanduser(f"~/.{self.config.client}/zotero"),
+            # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client]),
             "Darwin": os.path.expanduser("~/Library/Application Support/Zotero"),
         }[platform.system()]
         os.makedirs(profile.profiles, exist_ok=True)
 
         variant = ""
-        if self.beta:
+        if self.config.beta:
             variant = "-beta"
-        elif self.dev:
+        elif self.config.dev:
             variant = "-dev"
         profile.binary = {
-            "Linux": f"/usr/lib/{self.client}{variant}/{self.client}",
-            "Darwin": f"/Applications/{self.client.title()}{variant}.app/Contents/MacOS/{self.client}",
+            "Linux": f"/usr/lib/{self.config.client}{variant}/{self.config.client}",
+            "Darwin": f"/Applications/{self.config.client.title()}{variant}.app/Contents/MacOS/{self.config.client}",
         }[platform.system()]
 
         # create profile
@@ -420,12 +405,12 @@ class Zotero:
                 os.path.join(ROOT, "test/db", self.config.profile)
             )
             profile.firefox.set_preference(
-                "extensions.zotero.dataDir", os.path.join(profile.path, self.client)
+                "extensions.zotero.dataDir", os.path.join(profile.path, self.config.client)
             )
             profile.firefox.set_preference("extensions.zotero.useDataDir", True)
         else:
             profile.firefox = webdriver.FirefoxProfile(
-                os.path.join(FIXTURES, "profile", self.client)
+                os.path.join(FIXTURES, "profile", self.config.client)
             )
 
         install_xpis(os.path.join(ROOT, "xpi"), profile.firefox)
@@ -447,7 +432,7 @@ class Zotero:
         profile.firefox.set_preference("intl.locale.requested", "en-GB")
 
         profile.firefox.set_preference(
-            "extensions.zotero.debug-bridge.password", self.password
+            "extensions.zotero.debug-bridge.password", self.config.password
         )
         profile.firefox.set_preference(
             "dom.max_chrome_script_run_time", self.config.timeout
@@ -462,7 +447,7 @@ class Zotero:
                 for p, v in nested_dict_iter(preferences["fr"]):
                     profile.firefox.firefox.set_preference(p, v)
 
-        if self.client == "jurism":
+        if self.config.client == "jurism":
             my_log(
                 "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
             )
@@ -473,6 +458,7 @@ class Zotero:
 
         profile.firefox.update_preferences()
 
+        os.makedirs(profile.path, exist_ok=True)
         shutil.rmtree(profile.path, ignore_errors=True)
         shutil.move(profile.firefox.path, profile.path)
         profile.firefox = None
