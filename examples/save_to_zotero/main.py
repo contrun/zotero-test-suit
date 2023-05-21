@@ -40,6 +40,7 @@ def install_extenstions(driver, path):
         for path in glob.glob(os.path.join(path, "*.xpi")):
             driver.install_addon(path, temporary=True)
 
+
 def get_driver():
     options = Options()
     firefox_profile = None
@@ -130,9 +131,10 @@ def try_save_url(z, driver, url):
 
 
 def main():
+    profile_name = os.environ.get("PROFILE_NAME", "zotero-saver")
     config = ZoteroConfig(
         start_new=False,
-        profile_name="zotero-saver",
+        profile_name=profile_name,
         extensions=[
             os.path.join(ROOT, "extensions/zotero"),
         ],
@@ -143,10 +145,11 @@ def main():
     z = Zotero(config)
 
     driver = get_driver()
+    url_list_file = os.environ.get("URL_LIST_FILE", "urllist")
     try:
-        with open("urllist") as f:
+        with open(url_list_file) as f:
             for line in f:
-                url = line.rstrip()
+                url = line.strip()
                 try:
                     save_url(z, driver, url)
                 except NotSavedException as e:
