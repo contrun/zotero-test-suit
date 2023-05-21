@@ -390,7 +390,9 @@ class Zotero:
     def _create_profile(self):
         profile = Munch(name=self.config.profile_name)
 
-        profile.path = self.config.profile_path or os.path.expanduser(f"~/.{profile.name}")
+        profile.path = self.config.profile_path or os.path.expanduser(
+            f"~/.{profile.name}"
+        )
 
         profile.profiles = {
             "Linux": os.path.expanduser(f"~/.{self.config.client}/zotero"),
