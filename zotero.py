@@ -45,10 +45,10 @@ def my_log(txt, end="\n"):
 def install_xpis(path, profile):
     if not os.path.exists(path):
         return
-    my_log(f"Installing xpis in {path}")
+    my_log(f"Installing xpis in {path} to {profile.path}")
 
     for xpi in glob.glob(os.path.join(path, "*.xpi")):
-        my_log(f"installing {xpi}")
+        my_log(f"installing {xpi} to {profile.path}")
         profile.add_extension(xpi)
 
 
@@ -154,7 +154,6 @@ class ZoteroConfig:
                 "locale": "",
                 "first_run": True,
                 "timeout": 120,
-                "profile": "",
                 "trace_factor": 1,
                 "client": "zotero",
                 "beta": False,
@@ -162,7 +161,11 @@ class ZoteroConfig:
                 "password": str(uuid.uuid4()),
                 "testing": False,
                 "kill_at_exit": True,
-                "port": 0
+                "start_new": True,
+                "existing_profile_path": None,
+                "extension_directories": [],
+                "extension_paths": [],
+                "port": 0,
             }
         ]
         self.reset()
@@ -399,28 +402,22 @@ class Zotero:
         with open(profile.ini, "w") as f:
             ini.write(f, space_around_delimiters=False)
 
-        # layout profile
-        if self.config.profile:
-            profile.firefox = webdriver.FirefoxProfile(
-                os.path.join(ROOT, "test/db", self.config.profile)
+        if self.config.start_new:
+            my_log(f"Removing existing profile at {profile.path}")
+            shutil.rmtree(profile.path, ignore_errors=True)
+            os.makedirs(profile.path, exist_ok=True)
+
+        if self.config.existing_profile_path:
+            shutil.copytree(
+                self.config.existing_profile_path, profile.path, dirs_exist_ok=True
             )
-            profile.firefox.set_preference(
-                "extensions.zotero.dataDir", os.path.join(profile.path, self.config.client)
-            )
-            profile.firefox.set_preference("extensions.zotero.useDataDir", True)
-        else:
-            profile.firefox = webdriver.FirefoxProfile(
-                os.path.join(FIXTURES, "profile", self.config.client)
-            )
+
+        profile.firefox = webdriver.FirefoxProfile()
+
 
         install_xpis(os.path.join(ROOT, "xpi"), profile.firefox)
 
         install_xpis(os.path.join(ROOT, "other-xpis"), profile.firefox)
-        if self.config.profile:
-            install_xpis(
-                os.path.join(ROOT, "test/db", self.config.profile, "xpis"),
-                profile.firefox,
-            )
 
         profile.firefox.set_preference("extensions.zotero.debug.memoryInfo", True)
         # don't nag about the Z7 beta for a day
@@ -458,9 +455,8 @@ class Zotero:
 
         profile.firefox.update_preferences()
 
-        os.makedirs(profile.path, exist_ok=True)
-        shutil.rmtree(profile.path, ignore_errors=True)
-        shutil.move(profile.firefox.path, profile.path)
+        shutil.copytree(profile.firefox.path, profile.path, dirs_exist_ok=True)
+        shutil.rmtree(profile.firefox.path)
         profile.firefox = None
 
         return profile
