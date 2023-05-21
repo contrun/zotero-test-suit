@@ -15,6 +15,14 @@ from selenium.common.exceptions import WebDriverException
 
 import zotero
 
+
+class NotSavedException(Exception):
+    def __init__(self, e, url):
+        self.message = f"Exception happened while saving {url}: {e}"
+        self.exception = e
+        self.url = url
+
+
 ROOT = pathlib.Path(__file__).resolve().parent
 
 FIXTURES = os.path.join(ROOT, "fixtures")
@@ -49,14 +57,17 @@ def clean_url(url):
     return w3lib.url.canonicalize_url(newurl)
 
 
-def get_items_for_url(z, url):
+def get_items_for_url(z, url, webpage_only=True):
     cleaned_url = clean_url(url)
+
     items = z.execute(
         """
         var s = new Zotero.Search();
         s.libraryID = Zotero.Libraries.userLibraryID;
-        s.addCondition('itemType', 'is', 'webpage');
         s.addCondition('url', 'is', url);
+        if (webpage_only) {
+            s.addCondition('itemType', 'is', 'webpage');
+        }
         var itemIDs = await s.search();
         if (!itemIDs.length) {
             return [];
@@ -65,31 +76,51 @@ def get_items_for_url(z, url):
         return items;
             """,
         url=cleaned_url,
+        webpage_only=webpage_only,
     )
     return items
 
 
 def save_url(z, driver, url):
+    try:
+        result = try_save_url(z, driver, url)
+        if not result:
+            return result
+        url = result
+        # Wait a few seconds as it takes time for the zotero connector to snapshot the website
+        time.sleep(WAIT_FOR_CONNECTOR_SECONDS)
+        items = get_items_for_url(z, url, webpage_only=False)
+        if items:
+            print(f"Saving {url} succeeded")
+            print(json.dumps(items, indent=4, sort_keys=True))
+            return url
+        raise NotSavedException(Exception("Not saved"), url)
+    except WebDriverException as e:
+        raise NotSavedException(e, url)
+
+
+def try_save_url(z, driver, url):
+    """
+    Save url to zotero. Return None if URL already saved or the genuine url saved.
+    """
     # Check url already exists before saving it.
     items = get_items_for_url(z, url)
     if len(items) >= 1:
         print(f"{len(items)} items associated to {url} already saved")
         print(json.dumps(items, indent=4, sort_keys=True))
-        return False
+        return None
 
     driver.get(url)
     # Website may be redirected to another URL.
     if url != driver.current_url:
-        return save_url(z, driver, driver.current_url)
+        return try_save_url(z, driver, driver.current_url)
 
     print(f"Trying to saving {url}")
     # Save url to zotero by pressing the zotero connector shortcut.
     # Note ctrl+shift+f is the shortcut of a customized version of zotero connector.
     # Official zotero connector uses ctrl+shift+s, which is occupied by firefox for screenshot.
     pyautogui.hotkey("ctrl", "shift", "f")
-    # TODO: maybe check url is indeed saved, otherwise throw exception.
-    print(f"{url} saved")
-    return True
+    return url
 
 
 def main():
@@ -114,10 +145,9 @@ def main():
             "https://google.com",
         ]:
             try:
-                if save_url(z, driver, url):
-                    time.sleep(WAIT_FOR_CONNECTOR_SECONDS)
-            except WebDriverException as e:
-                print(f"Failed to save {url}: {e}")
+                save_url(z, driver, url)
+            except NotSavedException as e:
+                print(f"Failed to save {e.url}: {e.exception}")
     except (KeyboardInterrupt, SystemExit):
         print("exiting")
     finally:
