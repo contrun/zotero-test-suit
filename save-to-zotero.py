@@ -3,6 +3,7 @@ import pathlib
 import os.path
 import json
 import time
+import glob
 
 from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode
 
@@ -25,8 +26,6 @@ class NotSavedException(Exception):
 
 ROOT = pathlib.Path(__file__).resolve().parent
 
-FIXTURES = os.path.join(ROOT, "fixtures")
-
 DRIVER_TIME_OUT_SECONDS = 10
 
 WAIT_FOR_CONNECTOR_SECONDS = 10
@@ -36,10 +35,8 @@ def get_driver():
     options = Options()
     firefox_profile = None
     driver = webdriver.Firefox(firefox_profile=firefox_profile, options=options)
-    plugins = ["connector/connector.xpi", "connector/uBlock0_1.49.2.firefox.signed.xpi"]
-    for plugin in plugins:
-        p = os.path.join(os.path.dirname(__file__), plugin)
-        driver.install_addon(p, temporary=True)
+    for plugin in glob.glob(os.path.join(ROOT, "extensions/firefox/*.xpi")):
+        driver.install_addon(plugin, temporary=True)
     driver.set_page_load_timeout(DRIVER_TIME_OUT_SECONDS)
     driver.implicitly_wait(DRIVER_TIME_OUT_SECONDS)
     return driver
@@ -128,10 +125,10 @@ def main():
         start_new=False,
         profile_name="zotero-saver",
         extensions=[
-            os.path.join(ROOT, "xpi"),
+            os.path.join(ROOT, "extensions/zotero"),
         ],
         preference_files=[
-            os.path.join(ROOT, "preferences.toml"),
+            os.path.join(ROOT, "preferences/preferences.toml"),
         ],
     )
     z = zotero.Zotero(config)
