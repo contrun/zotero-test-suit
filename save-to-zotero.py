@@ -143,6 +143,8 @@ def main():
             "http://example.com",
             "https://baidu.com/",
             "https://google.com",
+            "https://eprint.iacr.org/2014/595.pdf",
+            "https://eprint.iacr.org/2014/595",
         ]:
             try:
                 save_url(z, driver, url)
