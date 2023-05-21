@@ -1,3 +1,0 @@
-api.zotero.org:HSTS	3	18808	1656601154819,1,1,2
-repo.zotero.org:HSTS	5	18808	1656601067947,1,1,2
-www.zotero.org:HSTS	1	18399	1621242716004,1,1,2
