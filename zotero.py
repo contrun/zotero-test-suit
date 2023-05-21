@@ -20,10 +20,6 @@ import toml
 from munch import Munch
 from selenium import webdriver
 
-ROOT = pathlib.Path(__file__).resolve().parent
-
-FIXTURES = os.path.join(ROOT, "fixtures")
-
 
 def strip_obj(data):
     if type(data) == list:
@@ -42,14 +38,36 @@ def my_log(txt, end="\n"):
     sys.stdout.flush()
 
 
-def install_xpis(path, profile):
+def install_xpi(profile, *path):
     if not os.path.exists(path):
         return
-    my_log(f"Installing xpis in {path} to {profile.path}")
 
-    for xpi in glob.glob(os.path.join(path, "*.xpi")):
-        my_log(f"installing {xpi} to {profile.path}")
-        profile.add_extension(xpi)
+    if not os.path.isfile(path):
+        my_log(f"installing {path} to {profile.path}")
+        profile.add_extension(path)
+    else:
+        for path in glob.glob(os.path.join(path, "*.xpi")):
+            my_log(f"installing {path} to {profile.path}")
+            profile.add_extension(path)
+
+
+def install_xpis(profile, *paths):
+    def install_xpi(profile, path):
+        if not os.path.exists(path):
+            return
+
+        if os.path.isfile(path):
+            my_log(f"installing {path} to {profile.path}")
+            profile.add_extension(path)
+        else:
+            for path in glob.glob(os.path.join(path, "*.xpi")):
+                my_log(f"installing {path} to {profile.path}")
+                profile.add_extension(path)
+        if not os.path.exists(path):
+            return
+
+    for path in paths:
+        install_xpi(profile, path)
 
 
 def running(program):
@@ -162,9 +180,8 @@ class ZoteroConfig:
                 "testing": False,
                 "kill_at_exit": True,
                 "start_new": True,
-                "existing_profile_path": None,
-                "extension_directories": [],
-                "extension_paths": [],
+                "existing_profile_path": "",
+                "extensions": [],
                 "port": 0,
             }
         ]
@@ -366,7 +383,7 @@ class Zotero:
             variant = "-dev"
         profile.binary = {
             "Linux": f"/usr/lib/{self.config.client}{variant}/{self.config.client}",
-            "Darwin": f"/Applications/{self.config.client.title()}{variant}.app/Contents/MacOS/{self.config.client}",
+            "Darwin": f"/Applications/{self.config.client}{variant}.app/Contents/MacOS/{self.config.client}",
         }[platform.system()]
 
         # create profile
@@ -414,10 +431,7 @@ class Zotero:
 
         profile.firefox = webdriver.FirefoxProfile()
 
-
-        install_xpis(os.path.join(ROOT, "xpi"), profile.firefox)
-
-        install_xpis(os.path.join(ROOT, "other-xpis"), profile.firefox)
+        install_xpis(profile.firefox, *self.config.extensions)
 
         profile.firefox.set_preference("extensions.zotero.debug.memoryInfo", True)
         # don't nag about the Z7 beta for a day

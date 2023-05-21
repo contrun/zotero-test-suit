@@ -1,8 +1,20 @@
+import pathlib
+import os.path
+
 import zotero
+
+ROOT = pathlib.Path(__file__).resolve().parent
+
+FIXTURES = os.path.join(ROOT, "fixtures")
 
 
 def main():
-    config = zotero.ZoteroConfig()
+    config = zotero.ZoteroConfig(
+        existing_profile_path=os.path.join(FIXTURES, "profile", "zotero"),
+        extensions=[
+            os.path.join(ROOT, "xpi"),
+        ],
+    )
     z = zotero.Zotero(config)
     items = z.execute(
         """
