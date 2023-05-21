@@ -14,6 +14,9 @@ def main():
         extensions=[
             os.path.join(ROOT, "xpi"),
         ],
+        preference_files=[
+            os.path.join(ROOT, "preferences.toml"),
+        ],
     )
     z = zotero.Zotero(config)
     items = z.execute(

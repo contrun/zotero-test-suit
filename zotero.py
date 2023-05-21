@@ -38,19 +38,6 @@ def my_log(txt, end="\n"):
     sys.stdout.flush()
 
 
-def install_xpi(profile, *path):
-    if not os.path.exists(path):
-        return
-
-    if not os.path.isfile(path):
-        my_log(f"installing {path} to {profile.path}")
-        profile.add_extension(path)
-    else:
-        for path in glob.glob(os.path.join(path, "*.xpi")):
-            my_log(f"installing {path} to {profile.path}")
-            profile.add_extension(path)
-
-
 def install_xpis(profile, *paths):
     def install_xpi(profile, path):
         if not os.path.exists(path):
@@ -68,6 +55,42 @@ def install_xpis(profile, *paths):
 
     for path in paths:
         install_xpi(profile, path)
+
+
+def update_profile_ini(name, path):
+    os.makedirs(path, exist_ok=True)
+
+    ini_file = os.path.join(path, "paths.ini")
+
+    ini = configparser.RawConfigParser()
+    ini.optionxform = str
+    if os.path.exists(ini_file):
+        ini.read(ini_file)
+
+    if not ini.has_section("General"):
+        ini.add_section("General")
+
+    id = None
+    for p in ini.sections():
+        for k, v in ini.items(p):
+            if k == "Name" and v == name:
+                id = p
+
+    if not id:
+        free = 0
+        while True:
+            id = f"Profile{free}"
+            if not ini.has_section(id):
+                break
+            free += 1
+        ini.add_section(id)
+        ini.set(id, "Name", name)
+
+    ini.set(id, "IsRelative", 0)
+    ini.set(id, "Path", path)
+    ini.set(id, "Default", None)
+    with open(ini_file, "w") as f:
+        ini.write(f, space_around_delimiters=False)
 
 
 def running(program):
@@ -165,10 +188,11 @@ class Pinger:
 
 
 class ZoteroConfig:
-    def __init__(self, **kwargs):
+    def __init__(self, **config):
         self.data = [
             {
-                "db": "",
+                "profile_name": "BBTZ5TEST",
+                "profile_path": os.path.expanduser(f"~/.BBTZ5TEST"),
                 "locale": "",
                 "first_run": True,
                 "timeout": 120,
@@ -182,11 +206,13 @@ class ZoteroConfig:
                 "start_new": True,
                 "existing_profile_path": "",
                 "extensions": [],
+                "preferences": [],
+                "preference_files": [],
                 "port": 0,
             }
         ]
         self.reset()
-        self.update(**kwargs)
+        self.update(**config)
 
     def __getattr__(self, name):
         value = [frame for frame in self.data if name in frame]
@@ -209,8 +235,8 @@ class ZoteroConfig:
         else:
             self.update(**{name: value})
 
-    def update(self, **kwargs):
-        for k, v in kwargs.items():
+    def update(self, **config):
+        for k, v in config.items():
             if not k in self.data[-1]:
                 raise AttributeError(f"'{type(self)}' object has no attribute '{k}'")
             if type(v) != type(self.data[-1][k]):
@@ -324,7 +350,7 @@ class Zotero:
 
     def start(self):
         self.needs_restart = False
-        profile = self.create_profile()
+        profile = self._create_profile()
 
         if self.config.client == "zotero":
             datadir_profile = "-datadir profile"
@@ -363,15 +389,13 @@ class Zotero:
         assert ready, f"{self.config.client} did not start"
         self.config.pop()
 
-    def create_profile(self):
-        profile = Munch(name="BBTZ5TEST")
+    def _create_profile(self):
+        profile = Munch(name=self.config.profile_name)
 
-        profile.path = os.path.expanduser(f"~/.{profile.name}")
+        profile.path = self.config.profile_path or os.path.expanduser(f"~/.{profile.name}")
 
         profile.profiles = {
-            # 'Linux': os.path.expanduser(f'~/.{self.config.client}/{self.config.client}'),
             "Linux": os.path.expanduser(f"~/.{self.config.client}/zotero"),
-            # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client]),
             "Darwin": os.path.expanduser("~/Library/Application Support/Zotero"),
         }[platform.system()]
         os.makedirs(profile.profiles, exist_ok=True)
@@ -386,38 +410,7 @@ class Zotero:
             "Darwin": f"/Applications/{self.config.client}{variant}.app/Contents/MacOS/{self.config.client}",
         }[platform.system()]
 
-        # create profile
-        profile.ini = os.path.join(profile.profiles, "profiles.ini")
-
-        ini = configparser.RawConfigParser()
-        ini.optionxform = str
-        if os.path.exists(profile.ini):
-            ini.read(profile.ini)
-
-        if not ini.has_section("General"):
-            ini.add_section("General")
-
-        profile.id = None
-        for p in ini.sections():
-            for k, v in ini.items(p):
-                if k == "Name" and v == profile.name:
-                    profile.id = p
-
-        if not profile.id:
-            free = 0
-            while True:
-                profile.id = f"Profile{free}"
-                if not ini.has_section(profile.id):
-                    break
-                free += 1
-            ini.add_section(profile.id)
-            ini.set(profile.id, "Name", profile.name)
-
-        ini.set(profile.id, "IsRelative", 0)
-        ini.set(profile.id, "Path", profile.path)
-        ini.set(profile.id, "Default", None)
-        with open(profile.ini, "w") as f:
-            ini.write(f, space_around_delimiters=False)
+        update_profile_ini(profile.name, profile.profiles)
 
         if self.config.start_new:
             my_log(f"Removing existing profile at {profile.path}")
@@ -429,51 +422,50 @@ class Zotero:
                 self.config.existing_profile_path, profile.path, dirs_exist_ok=True
             )
 
-        profile.firefox = webdriver.FirefoxProfile()
-
-        install_xpis(profile.firefox, *self.config.extensions)
-
-        profile.firefox.set_preference("extensions.zotero.debug.memoryInfo", True)
-        # don't nag about the Z7 beta for a day
-        profile.firefox.set_preference(
-            "extensions.zotero.hiddenNotices",
-            json.dumps({"z7-beta-warning": time.time() + 86400}),
-        )
-        profile.firefox.set_preference("intl.accept_languages", "en-GB")
-        profile.firefox.set_preference("intl.locale.requested", "en-GB")
-
-        profile.firefox.set_preference(
-            "extensions.zotero.debug-bridge.password", self.config.password
-        )
-        profile.firefox.set_preference(
-            "dom.max_chrome_script_run_time", self.config.timeout
-        )
-
-        with open(os.path.join(os.path.dirname(__file__), "preferences.toml")) as f:
-            preferences = toml.load(f)
-            for p, v in nested_dict_iter(preferences["general"]):
-                profile.firefox.set_preference(p, v)
-
-            if self.config.locale == "fr":
-                for p, v in nested_dict_iter(preferences["fr"]):
-                    profile.firefox.firefox.set_preference(p, v)
-
-        if self.config.client == "jurism":
-            my_log(
-                "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
-            )
-            profile.firefox.set_preference(
-                "extensions.zotero.dataDir", os.path.join(profile.path, "jurism")
-            )
-            profile.firefox.set_preference("extensions.zotero.useDataDir", True)
-
-        profile.firefox.update_preferences()
-
-        shutil.copytree(profile.firefox.path, profile.path, dirs_exist_ok=True)
-        shutil.rmtree(profile.firefox.path)
-        profile.firefox = None
+        self._install_extensions_and_update_preferences(profile.path)
 
         return profile
+
+    def _install_extensions_and_update_preferences(self, path):
+        firefox_profile = webdriver.FirefoxProfile()
+
+        install_xpis(firefox_profile, *self.config.extensions)
+
+        default_preferences = {
+            "extensions.zotero.debug.memoryInfo": True,
+            # don't nag about the Z7 beta for a day
+            "extensions.zotero.hiddenNotices": json.dumps(
+                {"z7-beta-warning": time.time() + 86400}
+            ),
+            "extensions.zotero.debug-bridge.password": self.config.password,
+            "dom.max_chrome_script_run_time": self.config.timeout,
+        }
+
+        if self.config.client == "jurism":
+            # WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34
+            default_preferences["extensions.zotero.dataDir"] = os.path.join(
+                path, "jurism"
+            )
+            default_preferences["extensions.zotero.useDataDir"] = True
+
+        for preference in [default_preferences] + self.config.preferences:
+            for k, v in preference.items():
+                firefox_profile.set_preference(k, v)
+
+        for preference_file in self.config.preference_files:
+            with open(preference_file) as f:
+                preferences = toml.load(f)
+                for p, v in nested_dict_iter(preferences["general"]):
+                    firefox_profile.set_preference(p, v)
+
+                if self.config.locale == "fr":
+                    for p, v in nested_dict_iter(preferences["fr"]):
+                        firefox_profile.set_preference(p, v)
+
+        firefox_profile.update_preferences()
+
+        shutil.copytree(firefox_profile.path, path, dirs_exist_ok=True)
+        shutil.rmtree(firefox_profile.path)
 
 
 class Preferences:
