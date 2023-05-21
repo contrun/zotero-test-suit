@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "zotero-test-suit"
+version = "0.1.0"
+description = ""
+authors = ["YI <uuuuuu@protonmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "zotero_test_suit", from = "src" },
+    { include = "save_to_zotero", from = "examples" },
+]
+include = [
+    { path = "extensions" },
+    { path = "preferences" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+munch = "^3.0.0"
+psutil = "^5.9.5"
+selenium = "^4.9.1"
+toml = "^0.10.2"
+
+pyautogui = { version = "^0.9.53", optional = true }
+w3lib =  { version = "^2.1.1", optional = true }
+
+[tool.poetry.extras]
+save_to_zotero = ["pyautogui", "w3lib"]
+
+[tool.poetry.scripts]
+save_to_zotero = { callable = "save_to_zotero.main:main", extras = ["save_to_zotero"] }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

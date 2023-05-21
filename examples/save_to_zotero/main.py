@@ -14,7 +14,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from selenium.common.exceptions import WebDriverException
 
-import zotero
+from zotero_test_suit import Zotero, ZoteroConfig
 
 
 class NotSavedException(Exception):
@@ -24,19 +24,27 @@ class NotSavedException(Exception):
         self.url = url
 
 
-ROOT = pathlib.Path(__file__).resolve().parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 
 DRIVER_TIME_OUT_SECONDS = 10
 
 WAIT_FOR_CONNECTOR_SECONDS = 10
 
 
+def install_extenstions(driver, path):
+    if not os.path.exists(path):
+        return
+    if os.path.isfile(path):
+        driver.install_addon(path, temporary=True)
+    else:
+        for path in glob.glob(os.path.join(path, "*.xpi")):
+            driver.install_addon(path, temporary=True)
+
 def get_driver():
     options = Options()
     firefox_profile = None
     driver = webdriver.Firefox(firefox_profile=firefox_profile, options=options)
-    for plugin in glob.glob(os.path.join(ROOT, "extensions/firefox/*.xpi")):
-        driver.install_addon(plugin, temporary=True)
+    install_extenstions(driver, os.path.join(ROOT, "extensions/firefox"))
     driver.set_page_load_timeout(DRIVER_TIME_OUT_SECONDS)
     driver.implicitly_wait(DRIVER_TIME_OUT_SECONDS)
     return driver
@@ -101,8 +109,9 @@ def try_save_url(z, driver, url):
     Save url to zotero. Return None if URL already saved or the genuine url saved.
     """
     # Check url already exists before saving it.
-    items = get_items_for_url(z, url)
-    if len(items) >= 1:
+    # Note that item may not be saved as a webpage (could be a journal article etc)
+    items = get_items_for_url(z, url, webpage_only=False)
+    if items:
         print(f"{len(items)} items associated to {url} already saved")
         print(json.dumps(items, indent=4, sort_keys=True))
         return None
@@ -121,7 +130,7 @@ def try_save_url(z, driver, url):
 
 
 def main():
-    config = zotero.ZoteroConfig(
+    config = ZoteroConfig(
         start_new=False,
         profile_name="zotero-saver",
         extensions=[
@@ -131,22 +140,17 @@ def main():
             os.path.join(ROOT, "preferences/preferences.toml"),
         ],
     )
-    z = zotero.Zotero(config)
+    z = Zotero(config)
 
     driver = get_driver()
     try:
-        for url in [
-            "about:wrongurl",
-            "http://example.com",
-            "https://baidu.com/",
-            "https://google.com",
-            "https://eprint.iacr.org/2014/595.pdf",
-            "https://eprint.iacr.org/2014/595",
-        ]:
-            try:
-                save_url(z, driver, url)
-            except NotSavedException as e:
-                print(f"Failed to save {e.url}: {e.exception}")
+        with open("urllist") as f:
+            for line in f:
+                url = line.rstrip()
+                try:
+                    save_url(z, driver, url)
+                except NotSavedException as e:
+                    print(f"Failed to save {e.url}: {e.exception}")
     except (KeyboardInterrupt, SystemExit):
         print("exiting")
     finally:
