@@ -41,6 +41,5 @@ with import <nixpkgs> { };
     snakemake
     toml
     pyautogui
-    pyelftools
-    (toPythonModule bcc)
+    w3lib
   ])).env

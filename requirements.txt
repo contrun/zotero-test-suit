@@ -40,3 +40,4 @@ selenium
 snakemake>=7.16
 toml
 pyautogui
+w3lib
